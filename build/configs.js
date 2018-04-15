@@ -30,13 +30,12 @@ const piecesRoot = resolve('examples')
 const pieces = fs.readdirSync(piecesRoot).reduce((inputs, dir) => {
   const fullDir = path.join(piecesRoot, dir)
   const input = path.join(fullDir, 'app.js')
-  console.log(fullDir, fs.statSync(fullDir).isDirectory())
   if (fs.statSync(fullDir).isDirectory() && fs.existsSync(input)) {
     inputs.push({
       input: input,
       file: resolve('dist/' + dir + '.js'),
-      format: 'umd',
-      name: dir,
+      format: 'es',
+      name: 'Piece' + dir.replace(/^\w/, character => character.toUpperCase()),
       env: 'production'
     })
   }
