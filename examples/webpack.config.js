@@ -10,7 +10,6 @@ module.exports = {
     if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
       entries[dir] = ['es6-promise/auto', entry]
     }
-    console.log(entries)
     return entries
   }, {}),
   output: {

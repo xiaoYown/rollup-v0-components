@@ -1,9 +1,11 @@
+const fs = require('fs');
 const path = require('path');
 const buble = require('rollup-plugin-buble');
 const flow = require('rollup-plugin-flow-no-whitespace');
 const cjs = require('rollup-plugin-commonjs');
 const node = require('rollup-plugin-node-resolve');
 const replace = require('rollup-plugin-replace');
+
 const version = process.env.VERSION || require('../package.json').version;
 const banner =
 `/*!
@@ -14,78 +16,66 @@ const banner =
 
 const resolve = _path => path.resolve(__dirname, '../', _path);
 
-module.exports = [
+const index = [
   {
-    input: {
-      input: resolve('src/index.js'),
-      // plugins: [
-      //   flow(),
-      //   node(),
-      //   cjs(),
-      //   replace({
-      //     __VERSION__: version
-      //   }),
-      //   buble()
-      // ]
-    },
-    output: {
-      file: resolve('dist/piece.js'),
-      format: 'umd',
-      banner,
-      name: 'piece-pages'
-    }
+    input: resolve('src/index.js'),
+    file: resolve('dist/piece.js'),
+    format: 'umd',
+    env: 'production'
   }
 ];
 
-// module.exports = [
-//   // browser dev
-//   {
-//     file: resolve('dist/vue-router.js'),
-//     format: 'umd',
-//     env: 'development'
-//   },
-//   {
-//     file: resolve('dist/vue-router.min.js'),
-//     format: 'umd',
-//     env: 'production'
-//   },
-//   {
-//     file: resolve('dist/vue-router.common.js'),
-//     format: 'cjs'
-//   },
-//   {
-//     file: resolve('dist/vue-router.esm.js'),
-//     format: 'es'
-//   }
-// ].map(genConfig)
+const piecesRoot = resolve('examples')
 
-// function genConfig (opts) {
-//   const config = {
-//     input: {
-//       input: resolve('src/index.js'),
-//       plugins: [
-//         flow(),
-//         node(),
-//         cjs(),
-//         replace({
-//           __VERSION__: version
-//         }),
-//         buble()
-//       ]
-//     },
-//     output: {
-//       file: opts.file,
-//       format: opts.format,
-//       banner,
-//       name: 'VueRouter'
-//     }
-//   }
+const pieces = fs.readdirSync(piecesRoot).reduce((inputs, dir) => {
+  const fullDir = path.join(piecesRoot, dir)
+  const input = path.join(fullDir, 'app.js')
+  console.log(fullDir, fs.statSync(fullDir).isDirectory())
+  if (fs.statSync(fullDir).isDirectory() && fs.existsSync(input)) {
+    inputs.push({
+      input: input,
+      file: resolve('dist/' + dir + '.js'),
+      format: 'umd',
+      name: dir,
+      env: 'production'
+    })
+  }
+  return inputs
+}, [])
 
-//   if (opts.env) {
-//     config.input.plugins.unshift(replace({
-//       'process.env.NODE_ENV': JSON.stringify(opts.env)
-//     }))
-//   }
+// console.log(pieces)
 
-//   return config
-// }
+const configs = index.concat(pieces);
+
+module.exports = configs.map(getConfig)
+
+function getConfig (options) {
+  const config = {
+    input: {
+      input: options.input,
+      plugins: [
+        flow(),
+        node(),
+        cjs(),
+        replace({
+          __VERSION__: version
+        }),
+        buble()
+      ]
+    },
+    output: {
+      file: options.file,
+      format: options.format,
+      banner,
+      name: options.name
+    }
+  }
+
+  if (options.env) {
+    config.input.plugins.unshift(replace({
+      'process.env.NODE_ENV': JSON.stringify(options.env)
+    }))
+  }
+
+  return config
+}
