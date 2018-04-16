@@ -1,4 +1,6 @@
+import Pages from './pages';
 
-(function () {
-  console.log('module init')
-})()
+export default {
+  name: 'piece'
+  Pages
+}
