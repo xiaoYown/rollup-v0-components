@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
+const utils = require('./utils')
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -20,7 +21,9 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+      { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' },
+      { test: /\.css$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }] },
+      { test: /\.scss$/, use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'sass-loader' }] }
     ]
   },
   resolve: {
@@ -30,13 +33,14 @@ module.exports = {
   },
   // Expose __dirname to allow automatically setting basename.
   context: __dirname,
-  node: {
+  node: { 
     __dirname: true
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'shared',
-      filename: 'shared.js'
+      name: 'common',
+      filename: 'common.js'
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')

@@ -1,0 +1,105 @@
+.xy__page {
+    padding: 10px;
+    line-height: 32px;
+    text-align: right;
+    &-go {
+      display: inline-block;
+      vertical-align: top;
+      padding-left: 10px;
+      &_form, &_btn {
+        display: inline-block;
+        vertical-align: top;
+      }
+      &_form {
+        width: 50px;
+        height: 34px;
+        padding: 0 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      &_btn {
+        margin-left: 10px;
+        width: 40px;
+        height: 32px;
+        border: 1px solid #ddd;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+          background-color: #2a393c;
+          color: #fff;
+        }
+      }
+    }
+    &-link {
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 20px;
+      border-top: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      &_btn {
+        display: inline-block;
+        vertical-align: top;
+        width: 32px;
+        height: 32px;
+        border-left: 1px solid #ddd;
+        color: #999;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        &:hover {
+          background-color: #2a393c;
+          color: #fff;
+        }
+      }
+      .disable {
+        cursor: not-allowed;
+        color: #999;
+        background-color: #fff;
+      }
+    }
+    &-size {
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      margin: 0 10px;
+      text-align: center;
+      button {
+        width: 36px;
+        height: 32px;
+        border: 1px solid #ddd;
+        background-color: #fff;
+        line-height: 32px;
+        cursor: pointer;
+      }
+      &_list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        display: none;
+        .choosing & {
+          display: block;
+        }
+        li {
+          cursor: pointer;
+          border-bottom: 1px solid #ddd;
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+    &-text {
+      display: inline-block;
+      vertical-align: top;
+    }
+    &-total {
+      display: inline-block;
+      vertical-align: top;
+      padding-right: 20px;
+    }
+  }
+  
