@@ -25,11 +25,11 @@ const index = [
   }
 ];
 
-const piecesRoot = resolve('examples')
+const piecesRoot = resolve('src/libs')
 
 const pieces = fs.readdirSync(piecesRoot).reduce((inputs, dir) => {
   const fullDir = path.join(piecesRoot, dir)
-  const input = path.join(fullDir, 'app.js')
+  const input = path.join(fullDir, 'index.js')
   if (fs.statSync(fullDir).isDirectory() && fs.existsSync(input)) {
     inputs.push({
       input: input,

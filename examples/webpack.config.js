@@ -25,7 +25,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'component': path.join(__dirname, '..', 'src')
+      '@': path.join(__dirname, '../src')
     }
   },
   // Expose __dirname to allow automatically setting basename.

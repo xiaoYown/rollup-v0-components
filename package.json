@@ -7,9 +7,12 @@
   "files": [
     "dist/*.js"
   ],
-  "keywords": ["rollup-components"],
+  "keywords": [
+    "rollup-components"
+  ],
   "scripts": {
     "dev": "node examples/server.js",
+    "dev:3001": "cross-env PORT=3001 node examples/server.js",
     "dev:dist": "rollup -wm -c build/rollup.dev.config.js",
     "build": "node build/build.js",
     "lint": "eslint src examples",
@@ -31,6 +34,7 @@
     "babel-preset-flow-vue": "1.0.0",
     "buble": "0.19.3",
     "chromedriver": "2.35.0",
+    "cross-env": "^5.1.4",
     "cross-spawn": "5.0.1",
     "css-loader": "0.28.10",
     "es6-promise": "4.2.4",
