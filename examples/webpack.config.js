@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
-const utils = require('./utils')
+// const utils = require('./utils')
 
 module.exports = {
   devtool: 'inline-source-map',

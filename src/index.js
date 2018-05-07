@@ -1,6 +1,6 @@
-import Pages from './pages';
+import Pages from './libs/pages';
 
 export default {
-  name: 'piece'
+  name: 'piece',
   Pages
 }
