@@ -1,14 +1,8 @@
 /*!
- * Piece v0.0.0 (date: 2018-5-7 18:20)
+ * PiecePages v0.0.0 (date: 2018-5-7 18:20)
  * (c) 2018 xiaoYown
  * @license MIT
  */
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.Piece = factory());
-}(this, (function () { 'use strict';
-
 var template = [
   {
     el: 'div',
@@ -362,11 +356,4 @@ function CreatePages (options) {
   return new Pages(options)
 }
 
-var index = {
-  name: 'piece',
-  Pages: CreatePages
-}
-
-return index;
-
-})));
+export default CreatePages;

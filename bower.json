@@ -1,8 +1,8 @@
 {
-  "name": "vue-router",
-  "main": "dist/vue-router.js",
-  "description": "official router for Vue.js",
-  "authors": "Evan You",
+  "name": "piece",
+  "main": "dist/piece.js",
+  "description": "rollup plugins template",
+  "authors": "xiaoYown",
   "license": "MIT",
   "ignore": [
     "examples",

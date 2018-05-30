@@ -1,28 +1,28 @@
 import eles from './mixins/template';
-import { CreateElement } from '@/utils';
+import { CreateElement } from '../../utils';
 
 class Pages {
-  index: any = 1;
-  pages: any = 0;
-  pageSize: any = 10;
-  total: any = 0;
-  wrap: any = null;
-  el: any = null;
-  elGo: any = null;
-  elGoForm: any = null;
-  elGoBtn: any = null;
-  elFirst: any = null; // *update
-  elLast: any = null; // *update
-  elPre: any = null; // *update
-  elNext: any = null; // *update
-  elIndex: any = null; // *update
-  elLink: any = null;
-  elSize: any = null; // *update
-  elSizeBtn: any = null; // *update
-  elSizeCh: any = null;
-  elTotal: any = null;
+  // index = 1;
+  // pages = 0;
+  // pageSize = 10;
+  // total = 0;
+  // wrap = null;
+  // el = null;
+  // elGo = null;
+  // elGoForm = null;
+  // elGoBtn = null;
+  // elFirst = null; // *update
+  // elLast = null; // *update
+  // elPre = null; // *update
+  // elNext = null; // *update
+  // elIndex = null; // *update
+  // elLink = null;
+  // elSize = null; // *update
+  // elSizeBtn = null; // *update
+  // elSizeCh = null;
+  // elTotal = null;
 
-  constructor (options: any) {
+  constructor (options) {
     if (typeof options.wrap === 'string') {
       this.wrap = document.getElementById(options.wrap)
     } else {
@@ -222,7 +222,7 @@ class Pages {
   }
 }
 
-function CreatePages (options: any) {
+function CreatePages (options) {
   return new Pages(options)
 }
 
