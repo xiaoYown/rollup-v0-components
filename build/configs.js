@@ -44,8 +44,8 @@ const pieces = fs.readdirSync(piecesRoot).reduce((inputs, dir) => {
   if (fs.statSync(fullDir).isDirectory() && fs.existsSync(input)) {
     inputs.push({
       input: input,
-      file: resolve('dist/plugins/' + dir + '.js'),
-      format: 'es',
+      file: resolve('dist/plugins/' + dir + '.min.js'),
+      format: 'umd',
       name: 'Piece' + utils.initialUpCase(dir),
       env: 'production'
     })

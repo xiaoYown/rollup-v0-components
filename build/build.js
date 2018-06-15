@@ -9,6 +9,7 @@ const packageInfo = require('../package');
 // gulp 依赖
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+const cleanCSS = require('gulp-clean-css');
 const rename = require("gulp-rename");
 const autoprefixer = require('gulp-autoprefixer');
 const header = require('gulp-header');
@@ -17,6 +18,7 @@ if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist')
 }
 // css 文件打包
+// 1. 入口样式参数整理
 function dirForCss (entry) {
   const source = entry.input.input.replace(/index\.js$/, 'main.scss');
   var basename = entry.output.file.match(/([\w\.]+)\.js$/)[1];
@@ -25,6 +27,7 @@ function dirForCss (entry) {
 
   if (!(new RegExp(packageInfo.name + '\.*')).test(basename)) {
     dest = path.join(__dirname, '../dist/plugins');
+    basename = basename.replace(/\.min/, '')
   } else {
     dest = path.join(__dirname, '../dist');
     basename = 'main';
@@ -38,23 +41,37 @@ function dirForCss (entry) {
     banner: entry.output.banner + '\n'
   }
 }
+// 压缩前整理
+function cleanPre (input) {
+  let nextPipe = null
+  
+  nextPipe = gulp.src(input.source)
+  .pipe(sass.sync().on('error', sass.logError))
+  .pipe(autoprefixer({
+    browsers: ['last 40 versions', 'safari 5', 'opera 12.1', 'ios 7', 'android 4']
+  }))
+  return nextPipe;
+}
+
 Object.keys(configs).forEach(key => {
   const input = dirForCss(configs[key]);
-  var renameParams = {
+  let pipe = cleanPre(input)
+  let renameParams = {
     basename: input.basename
   };
   if (input.suffix) {
-    renameParams.suffix = '.min'
+    renameParams.suffix = '.min';
+    pipe
+      .pipe(cleanCSS())
+      .pipe(rename(renameParams))
+      .pipe(header(input.banner))
+      .pipe(gulp.dest(input.dest));
+  } else {
+    pipe
+      .pipe(rename(renameParams))
+      .pipe(header(input.banner))
+      .pipe(gulp.dest(input.dest));
   }
-
-  gulp.src(input.source)
-    .pipe(sass.sync().on('error', sass.logError))
-    .pipe(autoprefixer({
-      browsers: ['last 40 versions', 'safari 5', 'opera 12.1', 'ios 7', 'android 4']
-    }))
-    .pipe(rename(renameParams))
-    .pipe(header(input.banner))
-    .pipe(gulp.dest(input.dest));
 })
 // js 文件打包
 build(Object.keys(configs).map(key => configs[key]));
