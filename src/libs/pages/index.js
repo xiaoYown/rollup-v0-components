@@ -2,26 +2,6 @@ import eles from './mixins/template';
 import { CreateElement } from '../../utils';
 
 class Pages {
-  // index = 1;
-  // pages = 0;
-  // pageSize = 10;
-  // total = 0;
-  // wrap = null;
-  // el = null;
-  // elGo = null;
-  // elGoForm = null;
-  // elGoBtn = null;
-  // elFirst = null; // *update
-  // elLast = null; // *update
-  // elPre = null; // *update
-  // elNext = null; // *update
-  // elIndex = null; // *update
-  // elLink = null;
-  // elSize = null; // *update
-  // elSizeBtn = null; // *update
-  // elSizeCh = null;
-  // elTotal = null;
-
   constructor (options) {
     if (typeof options.wrap === 'string') {
       this.wrap = document.getElementById(options.wrap)
@@ -33,7 +13,7 @@ class Pages {
     this.total = options.total
     this.cb = options.cb
     
-    // this.bindMethods()
+    this.bindMethods()
     this.create()
   }
   create () {
@@ -48,23 +28,23 @@ class Pages {
 
     this.updateView()
   }
-  // bindMethods () {
-  //   function bind (fn, ctx) {
-  //     return function (a) {
-  //       var l = arguments.length
-  //       return l
-  //           ? l > 1
-  //           ? fn.apply(ctx, arguments)
-  //           : fn.call(ctx, a)
-  //           : fn.call(ctx)
-  //     }
-  //   }
-  //   for (let key in this.__proto__) {
-  //     if (typeof this[key] === 'function') {
-  //       this[key] = bind(this.__proto__[key], this)
-  //     }
-  //   }
-  // }
+  bindMethods () {
+    function bind (fn, ctx) {
+      return function (a) {
+        let l = arguments.length
+        return l
+            ? l > 1
+            ? fn.apply(ctx, arguments)
+            : fn.call(ctx, a)
+            : fn.call(ctx)
+      }
+    }
+    for (let key in this.__proto__) {
+      if (typeof this[key] === 'function') {
+        this[key] = bind(this.__proto__[key], this)
+      }
+    }
+  }
   bindEvent () {
     this.elLink.addEventListener('selectstart', this.prevent.bind(this))
     this.elFirst.addEventListener('click', this.linkFirst.bind(this))
@@ -88,7 +68,7 @@ class Pages {
     this.elGoForm.removeEventListener('keydown', this.keydown.bind(this))
 
     this.wrap.removeChild(this.el)
-    for (var key in this) {
+    for (let key in this) {
       this[key] = null
     }
   }
@@ -101,8 +81,8 @@ class Pages {
   }
   // 设置 || 更新翻页按钮 class
   setLinkClass (eles, disable) {
-    var className = ''
-    for (var i = 0, len = eles.length; i < len; i++) {
+    let className = ''
+    for (let i = 0, len = eles.length; i < len; i++) {
       className = eles[i].className.replace(/\sdisable/, '')
       if (disable) {
         eles[i].className = className + ' disable'
@@ -129,7 +109,7 @@ class Pages {
   }
   // 外部调用， 修改数据 并 修改视图
   updateData (params) {
-    for (var key in params) {
+    for (let key in params) {
       this[key] = params[key]
     }
     this.setView()
@@ -166,7 +146,7 @@ class Pages {
     })
   }
   sizeChooseShow () {
-    var className = this.elSize.className
+    let className = this.elSize.className
     if (/choosing/.test(className)) {
       this.elSize.className = className.replace(/\schoosing/, '')
     } else {
@@ -174,7 +154,7 @@ class Pages {
     }
   }
   sizeChoose (event) {
-    var pageSize = parseInt(event.target.innerHTML.replace(/[^\d]+/g, ''))
+    let pageSize = parseInt(event.target.innerHTML.replace(/[^\d]+/g, ''))
     if (this.pageSize !== pageSize) {
       this.pageSize = pageSize
       // 页码重置
@@ -185,10 +165,10 @@ class Pages {
     }
   }
   pageFilter () {
-    var isFilter = 0,
-        val = this.elGoForm.value,
-        page = 0,
-        __page = 0;
+    let isFilter = 0;
+    let val = this.elGoForm.value;
+    let page = 0;
+    let __page = 0;
 
     // 过滤无效字符
     if (/[^\d]+/.test(val)) {
@@ -213,7 +193,7 @@ class Pages {
     }
   }
   goPage () {
-    var page = this.pageFilter()
+    let page = this.pageFilter()
     // 判断数字是否有效
     if (page && page !== this.index) {
       this.index = page

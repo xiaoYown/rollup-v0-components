@@ -1,4 +1,5 @@
 import Pages from '@/libs/pages'
+import '@/reset.scss'
 import '@/libs/pages/main.scss'
 
 var pages = Pages({
